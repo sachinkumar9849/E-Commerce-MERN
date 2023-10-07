@@ -7,9 +7,10 @@ function Navbar({ children }) {
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          {/* <a className="navbar-brand" href="#">
             Navbar
-          </a>
+          </a> */}
+          <Link to="/" className="navbar-brand"> <img className="img-fluid" src="https://www.creativefabrica.com/wp-content/uploads/2022/06/17/Ecommerce-Logo-Design-Graphics-32523051-1.jpg" alt="" /> </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -36,7 +37,7 @@ function Navbar({ children }) {
               <li className="nav-item">
                 <Link to="/cart" className="nav-link active">
                   <FontAwesomeIcon icon={faShoppingCart} />
-                  <span class="badge badge-primary badge-pill bg-danger">
+                  <span className="badge badge-primary badge-pill bg-danger">
                     5
                   </span>
                 </Link>
