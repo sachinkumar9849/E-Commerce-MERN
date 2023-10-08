@@ -81,3 +81,10 @@ img.card-img-top {
   height: 38px;
   color: white;
 }
+.page-link {
+  cursor: pointer;
+}.product_detail-img img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
