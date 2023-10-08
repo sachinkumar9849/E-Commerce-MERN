@@ -65,3 +65,19 @@ a img.img-fluid {
 .product-description {
   padding: 20px;
 }
+.card-body h5 {
+  font-size: 17px;
+}
+img.card-img-top {
+  min-height: 200px;
+  max-height: 200px;
+  object-fit: cover;
+}
+.active_page {
+  width: 40px;
+  border: 1px solid gainsboro;
+  text-align: center;
+  line-height: 35px;
+  height: 38px;
+  color: white;
+}

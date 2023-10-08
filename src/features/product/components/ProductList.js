@@ -5,9 +5,11 @@ import {
   fetchAllProductAsync,
   fetchProductsByFiltersAsync,
   selectAllProducts,
+  selectTotalItems,
 } from "../productListSlice";
-
+import { ITEMS_PER_PAGE } from "../../../app/constants";
 import { useEffect, useState } from "react";
+import Pagination from "../../common/Pagination";
 const filters = [
   {
     id: "category",
@@ -126,22 +128,46 @@ const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
   const [filter, setFilter] = useState({});
+  const [sort, setSort] = useState({});
+  const [page, setPage] = useState(1);
+  const totalItems = useSelector(selectTotalItems);
 
   const handleFilter = (e, section, option) => {
-    const newFilter = { ...filter, [section.id]: option.value };
+    const newFilter = { ...filter };
+    if (e.target.checked) {
+      if (newFilter[section.id]) {
+        newFilter[section.id].push(option.value);
+      } else {
+        newFilter[section.id] = [option.value];
+      }
+    } else {
+      const index = newFilter[section.id].findIndex(
+        (el) => el === option.value
+      );
+      newFilter[section.id].splice(index, 1);
+    }
+    console.log({ newFilter });
     setFilter(newFilter);
-    dispatch(fetchProductsByFiltersAsync(newFilter));
-    console.log(section.id, option.value);
   };
   const handleSort = (e, option) => {
-    const newFilter = { ...filter, _sort: option.sort, _order: option.order };
-    setFilter(newFilter);
-    dispatch(fetchProductsByFiltersAsync(newFilter));
+    const sort = { _sort: option.sort, _order: option.order };
+    console.log({ sort });
+    setSort(sort);
+  };
+
+  const handlePage = (page) => {
+    console.log({ page });
+    setPage(page);
   };
 
   useEffect(() => {
-    dispatch(fetchAllProductAsync());
-  }, [dispatch]);
+    const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
+    dispatch(fetchProductsByFiltersAsync({ filter, sort, pagination }));
+  }, [dispatch, filter, sort, page]);
+
+  useEffect(()=>{
+    setPage(1);
+  },[totalItems,sort])
 
   return (
     <>
@@ -212,7 +238,7 @@ const ProductList = () => {
                   title,
                 } = product;
                 return (
-                  <div className="col-lg-3" key={product.id}>
+                  <div className="col-lg-3 mb-4" key={product.id}>
                     <div className="card custom-card">
                       <Link to="/product-detail">
                         <img
@@ -242,35 +268,12 @@ const ProductList = () => {
               })}
             </div>
             <div className="row">
-              <div className="col-12">
-                <ul className="pagination mt-4">
-                  <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">«</span>
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">»</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
+              <Pagination
+                page={page}
+                setPage={setPage}
+                handlePage={handlePage}
+                totalItems={totalItems}
+              />
             </div>
           </div>
         </div>
