@@ -1,9 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectItems } from "../cart/cartSlice";
 
 
 function Navbar({ children }) {
+
+  const items = useSelector(selectItems);
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,9 +47,9 @@ function Navbar({ children }) {
               <li className="nav-item">
                 <Link to="/cart" className="nav-link active">
                   <FontAwesomeIcon icon={faShoppingCart} />
-                  <span className="badge badge-primary badge-pill bg-danger">
-                    5
-                  </span>
+                 {items.length>0&&  <span className="badge badge-primary badge-pill bg-danger">
+                   {items.length}
+                  </span>}
                 </Link>
               </li>
             </ul>

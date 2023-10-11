@@ -2,11 +2,20 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectProductById } from "../productListSlice";
 import { useParams } from "react-router";
+import { addToCartAsync } from "../../cart/cartSlice";
+import { selectLoggedInUser } from "../../auth/authSlice";
 
 const ProductDetail = () => {
   const product = useSelector(selectProductById);
   const dispatch = useDispatch();
   const params = useParams();
+  const user = useSelector(selectLoggedInUser)
+
+  const handleCart = (e)=>{
+    e.preventDefault()
+    dispatch(addToCartAsync({...product,quantity:1, user:user.id}))
+
+  }
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
@@ -59,7 +68,7 @@ const ProductDetail = () => {
               <p>Availability: In Stock</p>
 
               <p>{product.description}</p>
-              <button className="btn btn-primary">Add to Cart</button>
+              <button type="submit" onClick={handleCart} className="btn btn-primary">Add to Cart</button>
             </div>
           </div>
         </div>

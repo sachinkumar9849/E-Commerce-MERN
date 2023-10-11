@@ -1,7 +1,22 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { deleteItemFormCartAsync, selectItems, updateCartAsync } from "./cartSlice";
 
 const Cart = () => {
+  const items = useSelector(selectItems);
+  const dispatch = useDispatch();
+
+  const totalAmount = items.reduce((amount,item)=>item.price*item.quantity +amount,0);
+  const totalItems = items.reduce((total,item)=>item.quantity+total,0)
+  const handleQuantity = (e,item)=>{
+    dispatch(updateCartAsync({...item,quantity:+e.target.value}))
+  }
+
+  const handleRemove =(e,id)=>{
+    dispatch(deleteItemFormCartAsync(id))
+  }
+
   return (
     <div>
       <div className="container mt-5">
@@ -13,32 +28,44 @@ const Cart = () => {
               <th scope="col">Product</th>
               <th scope="col">Price</th>
               <th scope="col">Quantity</th>
-              <th scope="col">Total</th>
+              <th scope="col">Image</th>
+              <th scope="col">Category</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Product 1</td>
-              <td>$19.99</td>
-              <td>
-                <input type="number" className="form-control" value="1" />
-              </td>
-              <td>$19.99</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Product 2</td>
-              <td>$24.99</td>
-              <td>
-                <input type="number" className="form-control" value="2" />
-              </td>
-              <td>$49.98</td>
-            </tr>
+            {items.map((item, index) => {
+              return (
+                <>
+                  <tr key="index">
+                    <th scope="row">1</th>
+                    <td>{item.title}</td>
+                    <td>${item.price}</td>
+                    <td>
+                      
+                      <select onChange={((e) => handleQuantity(e, item))} value={item.quantity}>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      
+                      </select>
+                    </td>
+                    <td> <img src={items.thumbnail} alt="" /> </td>
+                    <td>{item.category}</td>
+                    <td >  <button onClick={e=>handleRemove(e,item.index)}>Remove</button> </td>
+                   
+                  
+                    
+                  </tr>
+                </>
+              );
+            })}
           </tbody>
         </table>
         <div className="text-right">
-          <p>Total: $69.97</p>
+          <p>Total: ${totalAmount}</p>
+          <p>Total Items in cart: {totalItems} Items</p>
           <Link className="btn btn-info text-white" to="/checkout">
             Checkout
           </Link>
