@@ -48,7 +48,9 @@
       "brand": "Samsung",
       "category": "smartphones",
       "thumbnail": "https://i.dummyjson.com/data/products/3/thumbnail.jpg",
-      "images": ["https://i.dummyjson.com/data/products/3/1.jpg"]
+      "images": [
+        "https://i.dummyjson.com/data/products/3/1.jpg"
+      ]
     },
     {
       "id": 4,
@@ -651,6 +653,18 @@
       "value": "lighting",
       "label": "lighting",
       "checked": false
+    }
+  ],
+  "users": [
+    {
+      "email": "lofixyqoxy@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "id": 1
+    },
+    {
+      "email": "test@gmail.com",
+      "password": "Test12345",
+      "id": 2
     }
   ]
 }

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
+
 function Navbar({ children }) {
   return (
     <>
@@ -33,6 +34,11 @@ function Navbar({ children }) {
                 <a className="nav-link active" aria-current="page" href="#">
                   Product
                 </a>
+              </li>
+              <li className="nav-item">
+                <Link to="/login" className="nav-link active" aria-current="page" href="#">
+                  Sign out
+                </Link>
               </li>
               <li className="nav-item">
                 <Link to="/cart" className="nav-link active">
