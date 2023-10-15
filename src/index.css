@@ -36,7 +36,7 @@
 .btn-primary:hover {
   background-color: #0056b3;
 }
-section{
+section {
   padding: 100px 0;
 }
 .form-group {
@@ -47,7 +47,8 @@ label {
 }
 a img.img-fluid {
   width: 116px;
-}span.line_throw {
+}
+span.line_throw {
   text-decoration: line-through;
   color: #bbaeae;
 }
@@ -83,8 +84,17 @@ img.card-img-top {
 }
 .page-link {
   cursor: pointer;
-}.product_detail-img img {
+}
+.product_detail-img img {
   width: 200px;
   height: 200px;
   object-fit: cover;
+}
+.address {
+  border: 1px solid gainsboro;
+  padding: 20px;
+  border-radius: 10px;
+}
+li {
+  list-style: none;
 }

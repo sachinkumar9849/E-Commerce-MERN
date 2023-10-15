@@ -1,21 +1,28 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { deleteItemFormCartAsync, selectItems, updateCartAsync } from "./cartSlice";
+import {
+  deleteItemFormCartAsync,
+  selectItems,
+  updateCartAsync,
+} from "./cartSlice";
 
 const Cart = () => {
   const items = useSelector(selectItems);
   const dispatch = useDispatch();
 
-  const totalAmount = items.reduce((amount,item)=>item.price*item.quantity +amount,0);
-  const totalItems = items.reduce((total,item)=>item.quantity+total,0)
-  const handleQuantity = (e,item)=>{
-    dispatch(updateCartAsync({...item,quantity:+e.target.value}))
-  }
+  const totalAmount = items.reduce(
+    (amount, item) => item.price * item.quantity + amount,
+    0
+  );
+  const totalItems = items.reduce((total, item) => item.quantity + total, 0);
+  const handleQuantity = (e, item) => {
+    dispatch(updateCartAsync({ ...item, quantity: +e.target.value }));
+  };
 
-  const handleRemove =(e,id)=>{
-    dispatch(deleteItemFormCartAsync(id))
-  }
+  const handleRemove = (e, id) => {
+    dispatch(deleteItemFormCartAsync(id));
+  };
 
   return (
     <div>
@@ -42,21 +49,27 @@ const Cart = () => {
                     <td>{item.title}</td>
                     <td>${item.price}</td>
                     <td>
-                      
-                      <select onChange={((e) => handleQuantity(e, item))} value={item.quantity}>
+                      <select
+                        onChange={(e) => handleQuantity(e, item)}
+                        value={item.quantity}
+                      >
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
-                      
                       </select>
                     </td>
-                    <td> <img src={items.thumbnail} alt="" /> </td>
+                    <td>
+                      
+                      <img src={items.thumbnail} alt="" />
+                    </td>
                     <td>{item.category}</td>
-                    <td >  <button onClick={e=>handleRemove(e,item.index)}>Remove</button> </td>
-                   
-                  
-                    
+                    <td>
+                      
+                      <button onClick={(e) => handleRemove(e, item.index)}>
+                        Remove
+                      </button>
+                    </td>
                   </tr>
                 </>
               );

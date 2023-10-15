@@ -31,6 +31,7 @@ const Signup = () => {
                       createUserAsync({
                         email: data.email,
                         password: data.password,
+                        addresses:[]
                       })
                     );
                   })}
